@@ -93,6 +93,7 @@ def main(_):
   gs_list = [i.split('-')[-1] for i in results]
 
   print("FLAGS.job_dir:", FLAGS.job_dir)
+  print("gs_list: ", gs_list)
   print("COCO_PATH:", COCO_PATH)
   pool = multiprocessing.Pool(FLAGS.threads, initializer)
   ret = pool.map(run, gs_list)
