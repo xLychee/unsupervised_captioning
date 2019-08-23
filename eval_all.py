@@ -48,7 +48,9 @@ def run(inp):
   if no_gpu:
     return
   out = FLAGS.job_dir + '/val_%s.json' % inp
+  print("run job: ", out)
   if not os.path.exists(out):
+    print("out not exist: ", out)
     with open(COCO_PATH + '/annotations/captions_val2014.json') as g:
       caption_data = json.load(g)
       name_to_id = [(x['file_name'], x['id']) for x in caption_data['images']]
@@ -68,6 +70,7 @@ def run(inp):
     with open(out, 'w') as g:
       json.dump(ret, g)
 
+  print("start comparison: ", out)
   coco = COCO(COCO_PATH + '/annotations/captions_val2014.json')
   cocoRes = coco.loadRes(out)
   # create cocoEval object by taking coco and cocoRes
@@ -89,6 +92,8 @@ def main(_):
   results = set(results)
   gs_list = [i.split('-')[-1] for i in results]
 
+  print("FLAGS.job_dir:", FLAGS.job_dir)
+  print("COCO_PATH:", COCO_PATH)
   pool = multiprocessing.Pool(FLAGS.threads, initializer)
   ret = pool.map(run, gs_list)
   pool.close()
