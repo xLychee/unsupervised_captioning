@@ -194,6 +194,18 @@ def rl_loss(gan_model, gan_loss, classes, scores, num, add_summaries):
   l_rewards_mat = l_rewards
   l_rewards = tf.unstack(l_rewards, axis=1)
 
+  #####
+  with open('data/word_counts.txt', 'r') as f:
+      dic = list(f)
+      dic = [i.split()[0] for i in dic]
+      dic.append('<unk>')
+      dic = tf.convert_to_tensor(dic)
+  
+  sentence = crop_sentence(sentence, FLAGS.end_id)
+  sentence = tf.gather(dic, sentence)
+  tf.print(sentence)
+  #####
+
   dis_predictions = tf.nn.sigmoid(logits)
   d_rewards = tf.log(dis_predictions + eps)
   o_rewards = obj_rewards(sequence, mask, classes, scores, num) * FLAGS.w_obj
