@@ -203,7 +203,8 @@ def rl_loss(gan_model, gan_loss, classes, scores, num, add_summaries):
   
   sequence = crop_sentence(sequence, FLAGS.end_id)
   sequence = tf.gather(dic, sequence)
-  sequence.eval()
+  with tf.Session() as sess:
+    sequence.eval()
   #####
 
   dis_predictions = tf.nn.sigmoid(logits)
