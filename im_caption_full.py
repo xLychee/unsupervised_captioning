@@ -195,6 +195,7 @@ def rl_loss(gan_model, gan_loss, classes, scores, num, add_summaries):
   l_rewards = tf.unstack(l_rewards, axis=1)
 
   #####
+  """
   with open('data/word_counts.txt', 'r') as f:
       dic = list(f)
       dic = [i.split()[0] for i in dic]
@@ -205,6 +206,7 @@ def rl_loss(gan_model, gan_loss, classes, scores, num, add_summaries):
   sequence = tf.gather(dic, sequence)
   with tf.Session() as sess:
     sequence.eval()
+  """
   #####
 
   dis_predictions = tf.nn.sigmoid(logits)
