@@ -202,7 +202,7 @@ def rl_loss(gan_model, gan_loss, classes, scores, num, add_summaries):
       dic.append('<unk>')
       dic = tf.convert_to_tensor(dic)
   
-  sentence = crop_sentence(sequence, FLAGS.end_id)
+  sentence = crop_sentence(sequence[0], FLAGS.end_id)
   sentence = tf.gather(dic, sentence)
   with tf.Session() as sess:
     sentence.eval()
